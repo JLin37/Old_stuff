@@ -1,0 +1,284 @@
+    <header style="background-image: url(assets/img/homepage.jpg)   " id="homeheader">
+        <div class="header-content">
+            <div class="header-content-inner">
+                <img src='assets/img/logo_arslin.png' width="150" height="150">
+                <hr>
+                <h1>Never Settle for Stealerships</h1>
+                <hr>
+                {{#link-to 'listings' class="btn btn-lg btn-primary"}}Browse Cars{{/link-to}}
+            </div>
+        </div>
+    </header>
+
+    {{#free-shipping freeshipping=model}}{{/free-shipping}}
+
+    <section class="bg-dark" id="concierge">
+        <div class="container-fluid">
+            <div class="row">
+              <div class="col-lg-8 col-lg-offset-2 text-center">
+                <h2 class="section-heading">Arslin Concierge <span class="badge">New!</span></h2>
+                <hr class="bg-light">
+                <p class="text-light">Allow the experts here at Arslin to take care of all of the hard work of matching your wants and needs to the right vehicles! </p>
+                <p class="text-light">We've condensed the arduous day-long affair at the dealership of finding your perfect match into a 30 minute consultation with one of our car experts.</p>
+                <p class="text-light">Rest easy knowing you're getting the car you want to buy, not the car we need to sell!</p>
+                <hr class="bg-light">
+                <h3>How it Works</h3>
+                <ol>
+                    <p class='text-light'><li>Setup an appointment with our experts by clicking the button down below.</li></p>
+                    <p class='text-light'><li>Enjoy our quick and streamlined process designed to discover your exact wants and needs in a vehicle.</li></p>
+                    <p class='text-light'><li>Take your pick from our personalized list of cars our concierges have picked out just for you.</li></p>
+                    <p class='text-light'><li>Ship your new car to your home!</li></p>                    
+                </ol>
+                <a id="Setmore_button_iframe" style="float:none" href="https://my.setmore.com/bookingpage/dc849eae-948e-447a-95da-0e4c2c9fda7d"><img border="none" src="https://my.setmore.com/images/bookappt/SetMore-book-button.png" alt="Book an appointment with Arslin using SetMore" /></a>
+              </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="bg-dark">
+        <div class="container text-center">
+            <div class="row center-block" data-toggle="modal" data-target="#freeshipping" data-backdrop="true">
+                <h3 style="border: 1px solid #ececec; padding: 20px;">
+                    <strong> Free <img src='assets/img/icons/freeshipping_white.png' height='50'></strong> when you <a role="button">sign up.</a>
+                </h3>
+            </div>
+        </div>
+    </section>
+
+
+
+    <section id="services">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">At Your Service</h2>
+                    <hr class="bg-primary">
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 text-center">
+                    <div class="service-box">
+                        <i class="fa fa-4x fa-industry wow bounceIn text-primary" data-wow-delay=".1s"></i>
+                        <h3>Petrolheads at Heart</h3>
+                        <p class="text-muted">Not only have we done this before, we're good at it too.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 text-center">
+                    <div class="service-box">
+                        <i class="fa fa-4x fa-newspaper-o wow bounceIn text-primary" data-wow-delay=".2s"></i>
+                        <h3>Full Vehicle Reports</h3>
+                        <p class="text-muted">Multi point inspection. Car inspectors go through every inch.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 text-center">
+                    <div class="service-box">
+                        <i class="fa fa-4x fa-wrench wow bounceIn text-primary" data-wow-delay=".3s"></i>
+                        <h3>Retail-Ready Used Vehicles</h3>
+                        <p class="text-muted">Like your mother, we only want what's best for you.</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 text-center">
+                    <div class="service-box">
+                        <i class="fa fa-4x  fa-line-chart wow bounceIn text-primary" data-wow-delay=".4s"></i>
+                        <h3>Next-Generation Analytics</h3>
+                        <p class="text-muted">We crunched the numbers and yep, there's no deal like Arslin.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 text-center">
+                    <div class="service-box">
+                        <i class="fa fa-4x fa-map-o wow bounceIn text-primary" data-wow-delay=".5s"></i>
+                        <h3>Delivered Right to You</h3>
+                        <p class="text-muted">You never have to leave the comfort of your chair.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 text-center">
+                    <div class="service-box">
+                        <i class="fa fa-4x fa-car fa-inverse wow bounceIn text-primary"></i>
+                        <h3>1000's of Vehicles added Daily</h3>
+                        <p class="text-muted">We will always have your favorite color in stock.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section style="background: 
+    linear-gradient(
+      rgba(61,136,210, 0.8), 
+      rgba(61,136,210, 0.8)
+    ),
+    url(assets/img/road.jpg); background-size: 100% 100%; background-repeat: no-repeat;" id="WhyHow">
+        <div class="container text-light" id="WhyHow-content">
+            <div class="row text-left">
+                <div class="col">
+                    <h1 class="section-heading">Why?</h1>
+                    <hr class="bg-light" align="left">
+                    <h2 class="text-light"> Dealerships <strong>(Stealerships)</strong>
+                    <br>Source their cars from 
+                    <br><strong>Auctions!</strong>  
+                    <br><strong>WHY</strong> can't <br>you?</h2>
+                </div>
+            </div>
+            <div class="row text-center">
+                <h2>Now You Can With <strong>Arslin!</strong></h2>
+                <hr class="bg-light" align="center">
+            </div>
+            <div class="row text-right">
+                <h2 class="text-light">
+                    <h1 class="section-heading">How?</h1>
+                    <hr class="bg-light" align="right">
+                    <h2>
+                    <strong>Arslin</strong> is <br>licensed to attend these
+                    <br><strong>Dealer ONLY</strong> auctions!
+                    </h2>
+                    <h2>We let you preview 
+                    <br> All the available 
+                    <br><strong>Deals</strong> right 
+                    <br>{{#link-to 'listings' class='text-dark'}}<strong>HERE!</strong> {{/link-to}}
+                    </h2>
+
+                </h2>
+            </div>
+        </div>
+    </section>
+
+    <section id="whatsdifferent" class="bg-dark">
+        <div class="container">
+            <div class="col text-center">
+                <h1 class="section-heading">What else is different?</h1>
+                <hr class="bg-light">
+            </div>
+        </div>
+    </section>
+
+    <section id="transparency">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h1 class="text-left">Transparency</h1>
+                </div>
+            </div>
+            <div class="row hidden-xs">
+                <div class="col-sm-4 text-left">
+                    <h3>Vehicle History Reports.
+                    <br>Inspection Reports.
+                    <br>Edmunds Reviews.
+                    <br>Engine Data.
+                    </h3>
+                </div>
+                <div class="col-sm-8 ">
+                    <img src="assets/img/transparency.jpg" class="img-responsive">
+                </div>
+            </div>
+            <div class="row visible-xs-block">
+                
+                <div class="col text-right">
+                    <h3>Vehicle History Reports.</h3>
+                </div>
+                <div class="col-xs-10 col-xs-offset-2">
+                    <img src="assets/img/autocheck.jpg" class="img-responsive">
+                </div>
+            </div>
+            <div class="row visible-xs-block">
+                <div class="col text-left">
+                    <h3>Inspection Reports.</h3>
+                </div>
+                <div class="col-xs-10">
+                    <img src="assets/img/inspectiondata.jpg" class="img-responsive">
+                </div>
+            </div>
+            <div class="row visible-xs-block">
+                
+                <div class="col text-right">
+                    <h3>Edmunds Reviews.</h3>
+                </div>
+                <div class="col-xs-10 col-xs-offset-2">
+                    <img src="assets/img/edmundsreviews.jpg" class="img-responsive">
+                </div>
+            </div>
+            <div class="row visible-xs-block">
+                <div class="col text-left">
+                    <h3>Engine Data.</h3>
+                </div>
+                <div class="col-xs-10 ">
+                    <img src="assets/img/enginedata.jpg" class="img-responsive">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="homepricing">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h1 class="text-right">Pricing</h1>
+                </div>
+            </div>
+            <div class="row hidden-xs">
+                <div class="col-sm-8 ">
+                    <img src="assets/img/pricelong.jpg" class="img-responsive">
+                </div>
+                <div class="col-sm-4 text-right">
+                    <h3>Competitive Pricing.
+                    <br>We Always Aim to
+                    <br>be Below Market.
+                    <br>We Even Show
+                    <br>it to You!
+                    </h3>
+                </div>
+            </div>
+            <div class="row visible-xs-block">
+                <div class="col-sm-8 ">
+                    <img src="assets/img/priceshort.jpg" class="img-responsive">
+                </div>
+                <div class="col-sm-4 text-right">
+                    <h3>Competitive Pricing.
+                    <br>We Always Aim to
+                    <br>be Below Market.
+                    <br>We Even Show
+                    <br>it to You!
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="inventoryvideo">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h1 class="text-left">Inventory</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4 text-left">
+                    <h3>Thousands of Choices.
+                    <br><strong>No Obligation</strong>
+                    <br>any one 
+                    <br>vehicle
+                    </h3>
+                </div>
+                <div class="col-sm-8">
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <video controls class="embed-responsive-item" id="inventoryVideo"> 
+                            <source src="assets/video/inventory.mp4" type="video/mp4">
+                                <source src="assets/video/inventory.ogg" type="video/ogg">
+                                    <source src="assets/video/inventory.webm" type="video/webm">
+                        </video>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="whatsdifferent" class="bg-dark">
+        <div class="container">
+            <div class="col text-center">
+                <h2>{{#link-to 'whyus' class="text-light"}}Find Out More{{/link-to}} / {{#link-to 'about' class="text-light"}}About Arslin{{/link-to}}</h2>
+            </div>
+        </div>
+    </section>

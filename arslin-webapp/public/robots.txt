@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /terms
+Disallow: /privacy
+Disallow: /constuctionpage
+Disallow: /press
+

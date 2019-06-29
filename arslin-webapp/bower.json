@@ -1,0 +1,29 @@
+{
+  "name": "arslin-webapp",
+  "dependencies": {
+    "ember": "2.6.1",
+    "ember-cli-shims": "0.1.0",
+    "ember-cli-test-loader": "0.2.2",
+    "ember-qunit-notifications": "0.1.0",
+    "ember-load-initializers": "ember-cli/ember-load-initializers#^0.5.1",
+    "ember-qunit": "^0.4.20",
+    "jquery": "^2.2.1",
+    "loader.js": "ember-cli/loader.js#^4.0.1",
+    "qunit": "^1.22.0",
+    "pretender": "^0.12.0",
+    "lodash": "4.11.2",
+    "faker": "Faker#^3.0.1",
+    "kjur-jsrsasign": "jsrsasign#^5.0.7",
+    "jsrsasign": "^5.0.1",
+    "photoswipe": "4.1.0",
+    "moment": "2.10.6",
+    "eonasdan-bootstrap-datetimepicker": "4.17.37",
+    "bootstrap": "~3.3.6",
+    "font-awesome": "^4.6.3",
+    "swiper": "~3.3.1"
+  },
+  "resolutions": {
+    "jquery": ">=2.2",
+    "ember": ">=2.0"
+  }
+}

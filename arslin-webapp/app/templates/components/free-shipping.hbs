@@ -1,0 +1,46 @@
+<div class="modal" tabindex="-1" id="freeshipping" role="dialog" aria-labelledby="freeshipping">
+  	<div class="modal-dialog">
+    	<div class="modal-content">
+      		<div class="modal-header text-center">
+        		<div>
+          			<button type="button" class="close" data-dismiss="modal"><span aria-hidden="false">&times;</span></button>
+          			<h3 class="modal-title">Get code for <strong>Free Shipping</strong> when you signup</h3>
+                <br>
+                <p>Please enter the code we send to you in the comment section of the forms.</p>
+		        </div>
+      		</div>
+
+      		<form class="modal-body">
+      		{{#unless isRegistered}}
+      			{{#if showAlert}}
+                    <div class="alert alert-danger text-center" role="alert">
+                        <i class="fa fa-times icon-remove" {{action 'dismissAlert'}}></i>
+                        Please fix all the errors below before continuing.
+                    </div>
+                {{/if}}
+
+	      		<div class="center-block" style="max-width: 400px;">
+			  		{{validated-input model=freeshipping valuePath='fullName' placeholder='Full Name'}} 
+			  		{{validated-input model=freeshipping type='number' valuePath='tel' placeholder='Phone Number'}}
+					{{validated-input model=freeshipping valuePath='email' placeholder='Email'}}
+			  		{{validated-input model=freeshipping valuePath='emailConfirmation' placeholder='Verify Email'}}
+			  		{{validated-input model=freeshipping valuePath='zipCode' placeholder='Zip Code'}}
+			  		<button id="submitrequest" class="btn btn-primary center-block"{{action 'submit' freeshipping onEvent="keypress"}}>Get Free Shipping</button>
+				</div>
+
+				{{else}}
+        <div class="container-fluid text-center">
+          <div class="alert alert-success" role="alert">
+          <i class="fa fa-check-circle icon-success fa-5x"></i>
+          <br>
+          <h2>Success</h2>
+          </div>
+          <br>
+          <a class="btn btn-secondary" data-dismiss="modal" {{action 'reset'}}>Close Form</a>
+        </div>
+        {{/unless}}  
+     		</form>
+        <p class="text-center"><small>Subject to Arslin <a href="/terms">Terms &amp; Coditions</a> and <a href="/privacy">Privacy Policy</a></small></p>
+    	</div>
+  	</div>
+</div>

@@ -1,0 +1,11 @@
+{{#if hasMore}}
+  <button type="button" class="big-button" {{bind-attr disabled=loadingMore}} {{action "loadMore"}}>
+  {{#if loadingMore}}
+    Currently loading...
+  {{else}}
+    Load More
+  {{/if}}
+  </button>
+{{/if}}
+
+

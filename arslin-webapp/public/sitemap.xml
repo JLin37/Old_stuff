@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" 
+  	  xmlns:video="http://www.google.com/schemas/sitemap-video/1.1"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+      http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+
+<url>
+  <loc>https://www.arslin.com/</loc>
+  <lastmod>2016-07-04T21:30:21+00:00</lastmod>
+  <changefreq>weekly</changefreq>
+  <image:image>
+       <image:loc>https://www.arslin.com/assets/img/logo_arslin_blue.png</image:loc>
+       <image:caption>Arslin logo</image:caption>
+    </image:image>
+    <video:video>
+      <video:content_loc>
+        https://www.arslin.com/assets/video/inventory.mp4
+      </video:content_loc>
+      <video:title>Thousand of listings on Arslin</video:title>  
+      <video:description>
+        Showing that Arslin will find any car for you!
+      </video:description>
+    </video:video>
+</url>
+<url>
+  <loc>https://www.arslin.com/listings</loc>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>https://www.arslin.com/listings/listing_id</loc>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>https://www.arslin.com/about</loc>
+  <changefreq>monthly</changefreq>
+</url>
+<url>
+  <loc>https://www.arslin.com/whyus</loc>
+  <changefreq>monthly</changefreq>
+</url>
+<url>
+  <loc>https://www.arslin.com/contact</loc>
+  <changefreq>monthly</changefreq>
+</url>
+</urlset>

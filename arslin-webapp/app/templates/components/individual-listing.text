@@ -1,0 +1,459 @@
+<div id='listing-carousel'>
+  <div id='carousel-custom' class='carousel slides' data-ride='carousel'>
+      <div class='carousel-outer slides'>
+          <!-- Wrapper for slides -->
+          <div class='carousel-inner' role="listbox" id="links" {{action 'mainGallery'}}>
+            {{#each listing.imageList as |image index|}}
+              {{#if (eq index 0)}}
+                <div class='item active '>
+                  <img src='{{image.src}}' id='image_group' alt='' class='center-block img-responsive'/>
+                </div>
+              {{else if image.src}}
+                <div class='item'>
+                  <img src='{{image.src}}' id='image_group' alt='' class='center-block img-responsive'/>
+                </div>
+              {{/if}}
+            {{else}}
+                <div class='item active'>
+                  <img src='https://placehold.it/800x600?text=Image+Coming+Soon' id='image_group' alt='' class='center-block img-responsive'/>
+                </div>
+            {{/each}}
+          </div>
+
+          {{photo-swipe gallery=mainGallery options=hideShare items=listing.imageList}}    
+          <!-- Controls -->
+          <a class='left carousel-control' href='#carousel-custom' data-slide='prev'>
+              <span class='glyphicon glyphicon-chevron-left'></span>
+          </a>
+          <a class='right carousel-control' href='#carousel-custom' data-slide='next'>
+              <span class='glyphicon glyphicon-chevron-right'></span>
+          </a>
+      </div>
+      
+      <div id='indicators' class='carousel-inner'>
+      <!-- Indicators -->
+        <ol class='carousel-indicators mCustomScrollbar'>
+            {{#each listing.imageList as |image index|}}
+              {{#if (eq index 0)}}
+                <li data-target='#carousel-custom' data-slide-to={{index}} class='active'>
+                <img src='{{image.src}}' height='50px' width='100px' alt='' class='center-block img-responsive'/>
+                </li>
+              {{else}}
+                <li data-target='#carousel-custom' data-slide-to={{index}}>
+                <img src='{{image.src}}' height='50px' width='100px' alt='' class='center-block img-responsive'/>
+                </li>
+              {{/if}}
+            {{else}}
+                <li data-target='#carousel-custom' data-slide-to={{index}}>
+                <img src='https://placehold.it/100x50' height='50px' width='100px' alt='' class='center-block img-responsive'/></li>
+            {{/each}}
+        </ol>             
+      </div>
+  </div>
+</div>
+
+<div>
+  <div class='container-fluid'>
+    <div class='row'>
+      <div class='col-md-3 text-center' id='expirationdate'>
+          <h4>Deal Available Till:</h4>
+          <h1 style="color:red">{{listing.expirationDt.pretty}}</h1>
+          <h4>Grade: {{listing.grade}}</h4>
+      </div>
+      <div class='col-md-9'>
+        <div class="row">
+          <div class='col-md-4 col-sm-6'>
+            <h4><img src='assets/img/icons/mileage_icon.png' width='50' height='50'><small> Mileage: </small>{{listing.odometer.pretty}}</h4></div>
+          <div class='col-md-4 col-sm-6'>
+            <h4><img src='assets/img/icons/trim_icon.png' width='50' height='50'><small>Trim: </small>{{listing.trim.pretty}}</h4></div>
+          <div class='col-md-4 col-sm-6'>
+            <h4><img src='assets/img/icons/color_icon.png' width='50' height='50'><small>Exterior Color: </small>{{listing.colorExt}}</h4></div>
+        </div>
+        <div class="row">
+          <div class='col-md-4 col-sm-6'>
+            <h4><img src='assets/img/icons/body_style_icon.png' width='50' height='50'> <small>Body Style: </small>{{listing.categories.body_style}}</h4></div>
+          <div class='col-md-4 col-sm-6'>
+            <h4><img src='assets/img/icons/transmission_icon.png' width='50' height='50'> <small>Transmission: </small>{{listing.transmission}}</h4></div>
+          <div class='col-md-4 col-sm-6'>
+            <h4><img src='assets/img/icons/car_top_icon.png' width='50' height='50'> <small>MPG Cty/Hwy </small>
+  : {{listing.mpg.city}}/{{listing.mpg.highway}}</h4></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="listing-details" class="container-fluid">
+  <div class="row text-center">
+    <div class="col-md-8 col-md-offset-2">
+
+      <hr class="bg-primary">
+
+      <p><button type="button" class="btn btn-primary" {{action "toggleBody"}}>Show Reviews</button></p>
+      {{#if isShowingBody}}
+      <div id="edmundsReviews">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-sm-8 col-sm-offset-2 text-center">
+              <h3>Edmunds Reviews</h3>
+
+              <small>Let the guys at Edmunds tell you about what they think of this car</small>
+            </div>
+            <img src="assets/img/220_color.png" >
+          </div>
+          <div class="row">
+            
+            <div class="col text-center" >
+              {{#if listing.edmundsReview.editorial.introduction}}
+              
+                
+                {{{listing.edmundsReview.editorial.introduction}}}
+                
+              {{else if listing.edmundsReview.editorial.review}}
+                <p>Disclaimer: Reviews for older cars are based off of when they first came to market.</p>
+                {{{listing.edmundsReview.editorial.review}}}
+              {{else}}
+                <ul class="list-group">
+                  <li class="list-group-item">Edmunds Review Unavaliable</li>
+                </ul>
+              {{/if}}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr class="bg-primary">
+
+      <div id="onlineReviews">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-sm-8 col-sm-offset-2 text-center">
+              <h3>Online Reviews</h3>  
+              <small>See what the world at large has to say about your {{listing.year}} {{listing.make.pretty}} {{listing.model.pretty}}.</small>
+            </div>
+          </div>
+          <div class="row">
+            <div class="embed-responsive embed-responsive-16by9">
+              <iframe class='center-block' id="ytplayer" type="text/html"  width="720" height="405"
+              src="https://www.youtube.com/embed/?listType=search&list='{{listing.year}} {{listing.make.pretty}} {{listing.model.pretty}} {{listing.trim.pretty}} review'&modestbranding=1&color=white"
+              frameborder="0" allowfullscreen></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+      {{/if}}
+      
+      <hr class="bg-primary">
+
+      <div id="comparableData">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-sm-8 col-sm-offset-2 text-center">
+              <h3>Competitors' listing</h3>  
+              <small>We want to give you the most amount of discloser. So we even show you what our competitors have for offer</small>
+            </div>
+          </div>
+          <hr class="bg-light">
+          <!-- <div class="row">
+            <div class="col">
+              {{#em-form model=listing formLayout="horizontal" submitButton=false}}
+
+              {{em-input label="ZIP Code" property="zipCode" type="number"}}
+
+              <div class="form-actions">
+                  <input disabled={{model.isntValid}} type="submit" class="btn btn-primary" value="Show Competitors' listing" {{action 'graphData' listing}}>
+              </div>
+              {{/em-form}}
+            </div>
+          </div>
+          <hr class="bg-light"> -->
+          <div class="row">
+            <div class="col text-center" >
+              {{#if listing.scatterContent}}
+                <div id="chart_div">
+                  {{bar-chart data=listing.scatterContent options=options}}
+                </div>
+              {{else}}
+                <ul class="list-group">
+                  <li class="list-group-item">Sorry. Feature is still in Beta, Market Data Maybe Unavaliable at Times.</li>
+                </ul>
+              {{/if}}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr class="bg-primary">
+
+      <div id="engineinterior">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-sm-8 col-sm-offset-2 text-center">
+              <h3>Engine and Interior info</h3>  
+              <small>A breakdown of the mechanical specifications of the engine and interior specs associated with trim.</small>
+            </div>
+          </div>
+          <div class="row" >
+            <div class="col-sm-6">
+              <ul class='list-group'>
+              <div><h4>Engine Data: <small>When available</small></h4>
+                <li class='list-group-item'>
+                    Configuration: {{listing.engine.configuration}}
+                </li>
+                <li class='list-group-item'>
+                    Total Number of Valves: {{listing.engine.total_valves}}
+                </li>
+                <li class='list-group-item'>
+                    Number of Cylinders: {{listing.engine.num_of_cyclinders}}
+                </li>
+                <li class='list-group-item'>
+                    Horsepower: {{listing.engine.horsepower}} (hp)
+                </li>
+                <li class='list-group-item'>
+                    Compressor Type: {{listing.engine.compressor_type}}
+                </li>
+                <li class='list-group-item'>
+                    Compression Ratio: {{listing.engine.compression_ratio}}
+                </li>
+                <li class='list-group-item'>
+                    Torque: {{listing.engine.torque}}
+                </li>
+                <li class='list-group-item'>
+                    Displacement: {{listing.engine.displacement}}
+                </li>
+                <li class='list-group-item'>
+                    Size of Engine: {{listing.engine.size}}
+                </li>
+              </div>
+              </ul>
+            </div>
+            <div class="col-sm-6">
+              <ul class='list-group'>
+                <div><h4>Detailed Trim:</h4>
+                {{#if listing.name}}
+                  <li class='list-group-item'>{{listing.name}}</li>
+                {{else}}
+                  <li class='list-group-item'>Data Unavaliable</li>
+                {{/if}}
+                </div>
+                <div><h4>Interior Details</h4>
+                {{#each listing.interiorList as |interior|}}
+                  <li class='list-group-item'>
+                    {{interior}}
+                  </li>
+                {{/each}}
+                  <li class='list-group-item'>Interior Color: {{listing.colorInt}}</li>
+                  <li class='list-group-item'>How does it smell :P: {{listing.interiorOdor}}</li>
+                </div>
+
+                <div><h4>Keys</h4>
+                {{#if listing.keyList}}
+                {{#each listing.keyList as |keys|}}
+                  <li class='list-group-item'>
+                    Type: {{keys.type}}
+                  </li>
+                  <li class='list-group-item'>
+                    Count: {{keys.count}}
+                  </li>
+                {{/each}}
+                {{else}}
+                  <li class='list-group-item'>Data Unavaliable</li>
+                {{/if}}
+                </div>
+                
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr class="bg-primary">
+
+      <div id="option_list">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-sm-8 col-sm-offset-2 text-center">
+              <h3>Options</h3>  
+              <small>Features included on the vehicle at the time of manufacture (based on VIN).</small>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col" >
+              {{#each listing.optionsList as |option|}}
+                <div class="col-md-3 col-sm-4 col-xs-6">
+                  <li class="text-center">
+                    {{option}}
+                  </li>
+                </div>
+              {{/each}}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr class="bg-primary">
+
+      <div id="tire_list">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-sm-8 col-sm-offset-2 text-center">
+              <h3>Tires</h3>  
+              <small>The things separating you from the ground - quite important.</small>
+            </div>
+          </div>
+          <div class="row" >
+            <div class='table-responsive'>
+              <table class='table table-bordered table-condensed text-center'>
+                <thead>
+                  <tr>
+                    <th class='text-center'><h6>Location</h6></th>
+                    <th class='text-center'><h6>Brand</h6></th>
+                    <th class='text-center'><h6>Diameter</h6></th>
+                    <th class='text-center'><h6>Width</h6></th>
+                    <th class='text-center'><h6>Aspect Ratio</h6></th>
+                    <th class='text-center'><h6>Tread (Inch)</h6></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Left Front</td>
+                    <td>{{listing.tireDict.left_front.brand}}</td>
+                    <td>{{listing.tireDict.left_front.diameter}}</td>
+                    <td>{{listing.tireDict.left_front.width}}</td>
+                    <td>{{listing.tireDict.left_front.aspect_ratio}}</td>
+                    <td>{{listing.tireDict.left_front.tread}}</td>
+                  </tr>
+                  <tr>
+                    <td>Right Front</td>
+                    <td>{{listing.tireDict.right_front.brand}}</td>
+                    <td>{{listing.tireDict.right_front.diameter}}</td>
+                    <td>{{listing.tireDict.right_front.width}}</td>
+                    <td>{{listing.tireDict.right_front.aspect_ratio}}</td>
+                    <td>{{listing.tireDict.right_front.tread}}</td>
+                  </tr>
+                  <tr>
+                    <td>Left Rear</td>
+                    <td>{{listing.tireDict.left_rear.brand}}</td>
+                    <td>{{listing.tireDict.left_rear.diameter}}</td>
+                    <td>{{listing.tireDict.left_rear.width}}</td>
+                    <td>{{listing.tireDict.left_rear.aspect_ratio}}</td>
+                    <td>{{listing.tireDict.left_rear.tread}}</td>
+                  </tr>
+                  <tr>
+                    <td>Right Rear</td>
+                    <td>{{listing.tireDict.right_rear.brand}}</td>
+                    <td>{{listing.tireDict.right_rear.diameter}}</td>
+                    <td>{{listing.tireDict.right_rear.width}}</td>
+                    <td>{{listing.tireDict.right_rear.aspect_ratio}}</td>
+                    <td>{{listing.tireDict.right_rear.tread}}</td>
+                  </tr>
+                  <tr>
+                    <td>Spare</td>
+                    <td>{{listing.tireDict.spare.brand}}</td>
+                    <td>{{listing.tireDict.spare.diameter}}</td>
+                    <td>{{listing.tireDict.spare.width}}</td>
+                    <td>{{listing.tireDict.spare.aspect_ratio}}</td>
+                    <td>{{listing.tireDict.spare.tread}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr class="bg-primary">
+
+      <div id="damage_list">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-sm-8 col-sm-offset-2 text-center">
+              <h3>Inspection</h3>  
+              <small>A full itinerary of damages_list assessed on your vehicle.</small>
+            </div>
+          </div>
+          <div class="row" >
+            <div class='table-responsive'>
+              <table class='table table-bordered table-condensed text-center'>
+                <thead>
+                  <tr>
+                        <th class='text-center'><h6>Location</h6></th>
+                        <th class='text-center'><h6>Condition</h6></th>
+                        <th class='text-center'><h6>Severity</h6></th>
+                        <th class='text-center'><h6>Picture</h6></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {{#each listing.damagesList as |damage|}}
+                        <tr>
+                          <td>
+                            <h6>
+                               {{damage.description}}
+                            </h6>
+                          </td>
+                          <td>
+                            <h6>
+                              {{damage.condition}}
+                            </h6>
+                          </td>
+                          <td>
+                            <h6>
+                              {{damage.severity}}
+                            </h6>
+                          </td>
+                          {{#if damage.image}}
+                          <td>
+                              <img src='{{damage.image.src}}' width='300px' height='200px' class='img-responsive'>
+                          </td>
+                        {{/if}}
+                      </tr>
+                    {{/each}}
+                  </tbody>
+                </table>
+              </div>
+          </div>
+        </div>
+      </div>
+
+      <hr class="bg-primary">
+
+      <div id="vehicle_warranty">
+        <div class="container-fluid text-center">
+          <div class="row">
+            <div class="col-sm-8 col-sm-offset-2">
+              <h3>Warranty</h3>  
+              <small>Manufacturer Warranty avaliable.</small>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col" >
+              <ul class="list-group">
+                {{#if listing.warrantyBasicYears}}
+                <li class="list-group-item">Original Manufacturer Basic Warranty Years: {{listing.warrantyBasicYears}}</li>
+                {{/if}}
+                {{#if listing.warrantyBasicMiles}}
+                <li class="list-group-item">Original Manufacturer Basic Warranty Miles: {{listing.warrantyBasicMiles}}</li>
+                {{/if}}
+                {{#if listing.warrantyPowertrainYears}}
+                <li class="list-group-item">Original Manufacturer Powertrain Warranty Years: {{listing.warrantyPowertrainYears}}</li>
+                {{/if}}
+                {{#if listing.warrantyPowertrainMiles}}
+                <li class="list-group-item">Original Manufacturer Powertrain Warranty Miles: {{listing.warrantyPowertrainMiles}}</li>
+                {{/if}}
+                {{#if listing.warrantyBasicYears}}
+                {{else if listing.warrantyBasicMiles}}
+                {{else if listing.warrantyPowertrainYears}}
+                {{else if listing.warrantyPowertrainMiles}}
+                {{else}}
+                  <li class="list-group-item">Data Unavaliable / Manufacturer Warranty has expired</li>
+                {{/if}}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+

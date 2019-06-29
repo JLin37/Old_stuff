@@ -1,0 +1,90 @@
+{{#filter-modal filterable=filterable}}{{/filter-modal}}
+{{#free-shipping freeshipping=freeshipping}}{{/free-shipping}}
+
+<header style="background-image: url(assets/img/homepage.jpg)">
+    <div class="header-content">
+        <div class="header-content-inner">
+            <img src='assets/img/logo_arslin.png' width="150" height="150">
+            <hr>
+            <h1>Never Settle for Stealerships</h1>
+            <hr>
+            {{#link-to 'home' class="btn btn-lg btn-primary btn-dark"}}Arslin Concierge{{/link-to}}
+            <hr>
+            <a href="#marketplace"><i class="fa fa-angle-double-down fa-3x text-light animated bounce" aria-hidden="true"></i></a>
+
+        </div>
+    </div>
+</header>
+
+<section class="bg-primary" id="about">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 text-center">
+                <h2 class="section-heading">Buy your next car online with Arslin and save up to 30% over a dealership.</h2>
+                <hr class="bg-light">
+                <p class="text-light">Arslin removes the dealership completely out of the equation with a fully online used-car marketplace. Rest easy knowing you have all the information you need right at your fingertips!</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="marketplace">
+    <div class="header-content">
+        <div class="header-content-inner">
+            <h1 class='text-center'><small>Now:</small> <strong>{{totalcars}}</strong> Possibilities</h1>
+        </div>
+    </div>
+</section>
+
+<div class="container-fluid text-center" id='filterbuttons'>
+  <div class="row" id='filterbutton-items' class="nav nav-pills nav-justified">
+    <div class="col-sm-3" id='filterbutton-item' data-toggle="modal" data-target="#filterModal" data-backdrop="true"><a role="button">Filters</a></div>
+    <div class="dropdown col-sm-3" id="filterbutton-item">
+      <a id="dLabel" data-target="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Sort By<span class="caret"></span></a>
+      <ul class="dropdown-menu" aria-labelledby="dLabel">
+        <li>{{#link-to "listings" (query-params sorting="priceAsc")}}Price <i class="fa fa-long-arrow-up fa-fw"></i>{{/link-to}}</li>
+        <li>{{#link-to "listings" (query-params sorting="priceDsc")}}Price <i class="fa fa-long-arrow-down fa-fw"></i>{{/link-to}}</li>
+        <li>{{#link-to "listings" (query-params sorting="yearAsc")}}Year <i class="fa fa-long-arrow-up fa-fw"></i>{{/link-to}}</li>
+        <li>{{#link-to "listings" (query-params sorting="yearDsc")}}Year <i class="fa fa-long-arrow-down fa-fw"></i>{{/link-to}}</li>
+        <li>{{#link-to "listings" (query-params sorting="odometerAsc")}}Mileage <i class="fa fa-long-arrow-up fa-fw"></i>{{/link-to}}</li>
+        <li>{{#link-to "listings" (query-params sorting="odometerDsc")}}Mileage <i class="fa fa-long-arrow-down fa-fw"></i>{{/link-to}}</li>
+      </ul>
+    </div>
+
+    <div id="filterbutton-item" class="col-sm-3">
+    {{#link-to "listings" (query-params make="" color_ext="" color_int="" car_model="" odometer="" price="" sorting="" year="" trim="" transmission="" bodyStyle="" category="")}}
+      Clear All
+    {{/link-to}}
+    </div>
+    <div id="filterbutton-item" class="col-sm-3">
+    {{#link-to 'requestcar'}}Requests{{/link-to}}
+    </div>
+  </div>
+</div>
+
+<h1>{{filters.search_param.name}}</h1>
+
+<div class="container text-center" id="marketplace">
+  <div class="row center-block" data-toggle="modal" data-target="#freeshipping" data-backdrop="true">
+    <h3 style="border: 1px solid #ececec; padding: 20px;">
+      <strong> Free <img src='assets/img/icons/freeshipping_black.png' height='50'></strong> when you sign up. <a role="button">click here</a>
+    </h3>
+  </div>
+</div>
+
+<div class="toggled">
+  <div id="page-content">
+    {{#listing-list}}
+      {{#each listings as |listing|}}
+        {{listing-item listing=listing}}
+      {{else}}
+        <p class='text-center'>No deals here!</p>
+      {{/each}}
+    {{/listing-list}}
+
+    {{#infinity-loader infinityModel=listings destroyOnInfinity=true triggerOffset=720 class='center-block'}}
+      <div class='text-center'><i class="fa fa-4x fa-cog fa-spin"></i>
+      </div>
+    {{/infinity-loader}}
+  </div>
+</div>

@@ -1,0 +1,122 @@
+	<header style="background: 
+    linear-gradient(
+      rgba(61,136,210, 0.8), 
+      rgba(61,136,210, 0.9)
+    ),
+    url(assets/img/bg.jpg); background-size: 100% 100%; background-repeat: no-repeat;">
+        <div class="header-content">
+            <div class="header-content-inner">
+                <img src='assets/img/logo_arslin.png' width="150" height="150">
+                <hr>
+                <h1>Request A Specific Car</h1>
+            </div>
+        </div>
+    </header>
+
+	<section id="requestCar" class="form">
+        <form class="container">
+        	
+            <div class="row">
+            {{#unless isRegistered}}
+                <div class="col-lg-8 col-lg-offset-2">
+                    <div class="text-center">
+                        <h3>What's Your Dream Car</h3>
+                    </div>
+
+                    {{#if showAlert}}
+                        <div class="alert alert-danger text-center" role="alert">
+                            <i class="fa fa-times icon-remove" {{action 'dismissAlert'}}></i>
+                            Please fix all the errors below before continuing.
+                        </div>
+                    {{/if}}
+
+                    <p class="text-center">Tell us a little about your dream car and we will do our best to find it for you.</p>
+
+                    <div class="row">
+                        <div class="col-sm-4">
+                            {{validated-input model=model valuePath='year' placeholder='Year' type="Number"}} 
+                        </div>
+                        <div class="col-sm-4">
+                            {{validated-input model=model valuePath='make' placeholder="Make"}}
+                        </div>
+                        <div class="col-sm-4">
+                            {{validated-input model=model valuePath='carmodel' placeholder="Model"}}
+                        </div>
+                    </div>
+
+                    {{validated-input model=model valuePath='extColor' placeholder='Exterior Color'}}
+                    {{validated-input model=model valuePath='intColor' placeholder='Interior Color'}}
+                    {{validated-input model=model valuePath='mileage' placeholder='Mileage Range  e.g. 10000-25000 or less than 15k'}}
+                    {{validated-input model=model valuePath='price' placeholder='Price Range  e.g. $15,000-$22,000 or $35k budget'}}
+
+                    {{textarea type='text' value=model.comment placeholder='Comments' valuePath='comment' class="form-control"}}
+                    <br>
+                    <p class="text-center">Your contact information.</p>
+                    {{validated-input model=model valuePath='fullName' placeholder='Full Name'}} 
+                    {{validated-input model=model valuePath='tel' placeholder='Phone Number'}}
+                    <div class="row">
+                        <div class="col-sm-6">
+                            {{validated-input model=model valuePath='email' placeholder='Email'}} 
+                        </div>
+                        <div class="col-sm-6">
+                            {{validated-input model=model valuePath='emailConfirmation' placeholder='Verify Email'}}
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-sm-4">
+                            {{validated-input model=model valuePath='city' placeholder='City'}} 
+                        </div>
+                        <div class="col-sm-4">
+                            {{validated-input model=model valuePath='state' placeholder="State"}}
+                        </div>
+                        <div class="col-sm-4">
+                            {{validated-input model=model valuePath='zipCode' placeholder="Zip Code" type='number'}}
+                        </div>
+                    </div>
+                    
+
+                    <button id="submitrequest" class="btn btn-primary center-block"{{action 'submit' model onEvent="keypress"}}>Submit Request</button>
+                    
+                </div>
+                {{else}}
+                  <div class="container-fluid text-center">
+                    <div class="alert alert-success" role="alert">
+                    <i class="fa fa-check-circle icon-success fa-5x"></i>
+                    <br>
+                    <h2>Success</h2>
+                    </div>
+                    <br>
+                    <a class="btn btn-secondary" {{action 'reset'}}>Retun to Form</a>
+                  </div>
+
+
+                {{/unless}}  
+            </div>
+        </form>
+    </section>
+
+    <!-- <section id="location" class="bg-dark">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 text-center">
+                    <h2 class="section-heading">Regions of Operation</h2>
+                </div>
+            </div>
+            <hr class="bg-light">
+
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 text-center">
+                    <p class="text-light">We source our listings from all around the country, but we have <strong>South Florida</strong> and <strong>Atlanta Metro</strong> regions.</p>
+                    <p class="text-light">but If you live in a region beside <strong>South Florida</strong> and <strong>Atlanta Metro</strong>, please feel free fill out the form above with what kind of car you are looking for and where you live. We will use our powerful search algorithm to find the perfect car in your area for you. This will help us keep transportation costs low for you.</p>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 text-center">
+                    <p class="text-light">But if you feel like there is a car in our listings that has caught your interest, don't hesitate to processed with the <strong>Buy It</strong> button and enter your information as required. The shipping will carry a premium depending on the distance you live away from our service areas. But rest assured that we will find the best and most cost effective shipping partners to get your car to you.</p>
+                    {{#link-to 'listings' class='btn btn-primary page-scroll bg-primary'}}Browse Cars{{/link-to}}
+                </div>
+            </div>
+        </div>
+    </section> -->

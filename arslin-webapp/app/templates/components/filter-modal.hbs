@@ -1,0 +1,265 @@
+<div class="modal" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="filterLabel">
+  <div class="modal-dialog" id="filter-dialog">
+    <div class="modal-content" id="filter-content">
+      <div class="modal-header text-center" id="filter-header">
+        <div>
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="false">&times;</span></button>
+          <h3 class="modal-title">Filters</h3>
+        </div>
+      </div>
+
+      <div class="modal-body" id="filter-body">
+        <div style="border-bottom:1px solid #ececec;">
+          <div class="row">
+            <div class="text-center">
+              <h4>Year</h4>
+            </div>
+            {{#multiselect-checkboxes options=filterable.yearList selection=filters.year valueProperty='value' tagName='div'  as |year isSelected|}}
+              <div class="col col-xs-6 col-sm-3 col-md-2 col-lg-1">
+                <label class="modal-text">
+                  {{input type="checkbox" checked=isSelected}}
+                  {{year.value}}
+                </label>
+              </div>
+            {{/multiselect-checkboxes}}
+          </div> 
+          <div {{action 'clear' 'year'}} class="text-center row">
+            <a role="button" class="btn btn-default">
+              Clear Years
+            </a>
+          </div>
+          <br>     
+        </div>
+
+        <div style="border-bottom:1px solid #ececec;">
+          <div class="row">
+            <div class="text-center">
+              <h4>Make</h4>
+            </div>
+            {{#multiselect-checkboxes options=filterable.make selection=filters.make valueProperty='value' tagName='div'  as |make isSelected|}}
+              <div class="col col-xs-6 col-sm-3 col-md-2 col-lg-1">
+                <label class="modal-text">
+                  {{input type="checkbox" checked=isSelected}}
+                  {{make.name}}
+                </label>
+              </div>
+            {{/multiselect-checkboxes}}  
+          </div>     
+          <div {{action 'clear' 'make'}} class="text-center row">
+            <a role="button" class="btn btn-default">
+              Clear Makes
+            </a>
+          </div> 
+          <br>
+        </div>
+
+        <div style="border-bottom:1px solid #ececec;">
+          <div class="text-center">
+            <h4>Model</h4>
+          </div>
+          {{#if filterable.models}}
+            <div class="row">
+            {{#multiselect-checkboxes options=filterable.models valueProperty='value' selection=filters.car_model tagName='div'  as |model isSelected| }}
+              <div class="col col-xs-6 col-sm-3 col-md-2 col-lg-1">
+                <label class="modal-text">
+                  {{input type="checkbox" checked=isSelected}}
+                  {{model.name}}
+                </label>
+              </div>
+            {{/multiselect-checkboxes}}
+            </div>
+            <div {{action 'clear' 'model'}} class="text-center row">
+              <a role="button" class="btn btn-default">
+                Clear Models
+              </a>
+            </div> 
+            <br>
+          {{else}}
+            <p class="text-center">Vehicle models will be available once vehicle make has been filtered.</p>
+          {{/if}}
+        </div>
+
+        <div style="border-bottom:1px solid #ececec;">
+          <div class="text-center">
+          <h4>Trim</h4></div>
+          {{#if filterable.trim}}
+          <div class="row">
+            {{#multiselect-checkboxes options=filterable.trim valueProperty='value' selection=filters.trim tagName='div'  as |model isSelected| }}
+              <div class="col col-xs-6 col-sm-3 col-md-2 col-lg-1">
+                <label class="modal-text">
+                  {{input type="checkbox" checked=isSelected}}
+                  {{model.name}}
+                </label>
+              </div>
+            {{/multiselect-checkboxes}}
+          </div>
+          <div {{action 'clear' 'trim'}} class="text-center row">
+            <a role="button" class="btn btn-default">
+              Clear Trims
+            </a>
+          </div> 
+          <br>
+          {{else}}
+            <p class="text-center">Vehicle trim will be available once vehicle model has been filtered.</p>
+          {{/if}}
+        </div>
+
+        <div style="border-bottom:1px solid #ececec;">
+          <div class="row">
+            <div class="text-center">
+            <h4>Transmission</h4></div>
+            {{#multiselect-checkboxes options=filterable.transmission selection=filters.transmission valueProperty='name' tagName='div'  as |transmission isSelected|}}
+              <div class="col col-xs-6 col-sm-4 col-md-4 col-lg-4 col-sm-offset-2">
+                <label class="modal-text">
+                  {{input type="checkbox" checked=isSelected}}
+                  {{transmission.name}}
+                </label>
+              </div>
+            {{/multiselect-checkboxes}}   
+          </div>    
+          <div {{action 'clear' 'transmission'}} class="text-center row">
+            <a role="button" class="btn btn-default">
+              Clear Transmissions
+            </a>
+          </div> 
+          <br>
+        </div>
+
+        <div style="border-bottom:1px solid #ececec;">
+          <div class="row">
+            <div class="text-center">
+            <h4>Exterior Color</h4></div>
+            {{#multiselect-checkboxes options=filterable.colorExt selection=filters.color_ext valueProperty='name' tagName='div'  as |ExtColor isSelected|}}
+              <div class="col col-xs-6 col-sm-3 col-md-2 col-lg-1">
+                <label class="modal-text">
+                  {{input type="checkbox" checked=isSelected}}
+                  {{ExtColor.name}}
+                </label>
+              </div>
+            {{/multiselect-checkboxes}} 
+          </div>
+          <div {{action 'clear' 'extColor'}} class="text-center row">
+            <a role="button" class="btn btn-default">
+              Clear Exterior Colors
+            </a>
+          </div>  
+          <br>         
+        </div> 
+        
+        <div class="row" style="border-bottom:1px solid #ececec;">
+          <div class="row">
+            <div class="text-center">
+            <h4>Interior Color</h4></div>
+            {{#multiselect-checkboxes options=filterable.colorInt selection=filters.color_int valueProperty='name' tagName='div'  as |IntColor isSelected|}}
+              <div class="col col-xs-6 col-sm-3 col-md-2 col-lg-1">
+                <label class="modal-text">
+                  {{input type="checkbox" checked=isSelected}}
+                  {{IntColor.name}}
+                </label>
+              </div>
+            {{/multiselect-checkboxes}}
+          </div> 
+          <div {{action 'clear' 'intColor'}} class="text-center row">
+            <a role="button" class="btn btn-default">
+              Clear Interior Colors
+            </a>
+          </div> 
+          <br>
+        </div>
+
+        <div class="row" style="border-bottom:1px solid #ececec;">
+          <div class="row">
+            <div class="text-center">
+            <h4>Body Style</h4></div>
+            {{#multiselect-checkboxes options=filterable.bodyStyle selection=filters.bodyStyle valueProperty='name' tagName='div'  as |bodyStyle isSelected|}}
+              <div class="col col-xs-6 col-sm-3 col-md-2 col-lg-1">
+                <label class="modal-text">
+                  {{input type="checkbox" checked=isSelected}}
+                  {{bodyStyle.name}}
+                </label>
+              </div>
+            {{/multiselect-checkboxes}} 
+          </div>
+          <div {{action 'clear' 'bodyStyle'}} class="text-center row">
+            <a role="button" class="btn btn-default">
+              Clear Body Styles
+            </a>
+          </div> 
+          <br>          
+        </div>
+
+        <!-- <div class="row" style="border-bottom:1px solid #ececec;">
+          <h4 class="text-center">Vehicle Features</h4>
+          <button type="button" class="btn btn-default text-center" {{action "toggleBody"}}>Show Features</button>
+          {{#if isShowingBody}}
+            
+          <div class="row">
+            <div>
+            {{#multiselect-checkboxes options=filterable.optionsList selection=filters.optionsList valueProperty='value' tagName='div'  as |optionsList isSelected|}}
+              <div class="col col-xs-6 col-sm-3 col-md-2 col-lg-1">
+                <label class="modal-text">
+                  {{input type="checkbox" checked=isSelected}}
+                  {{optionsList.value}}
+                </label>
+              </div>
+            {{/multiselect-checkboxes}} 
+            </div>
+          </div>
+          <div {{action 'clear' 'optionsList'}} class="text-center row">
+            <a role="button" class="btn btn-default">
+              Clear Body Styles
+            </a>
+          </div> 
+          {{/if}}
+          <br>          
+        </div> -->
+
+        <div class="row" style="border-bottom:1px solid #ececec;">
+          <div class="col-md-6">
+          <div class="text-center">
+            <h4>Mileage less than</h4></div>
+            {{x-range-input min=0 max=250000 step=2000 value=filters.odometer action=(action "odometer")}}
+
+            <div class="spec-number">{{odometer}}</div>
+          </div>
+          <div class="col-md-6">
+          <div class="text-center">
+            <h4>Price less than</h4></div>
+            {{x-range-input min=0 max=250000 step=2000 value=filters.price valueProperty='price' action=(action "price")}}
+
+            <div class="spec-number">{{price}}</div>
+          </div>
+        </div>   
+      </div>
+    </div>
+
+
+    <div class="modal-footer" id="filter-footer">
+      <div id="filter-selection" class="row">
+        <div class="col-sm-4 col-sm-offset-2" style="border-bottom:1px solid #ececec;">
+          {{#link-to 'listings' (query-params 
+          make=filters.query_make 
+          car_model=filters.query_model 
+          trim=filters.query_trim
+          year=filters.query_year 
+          color_ext=filters.query_color_ext
+          transmission=filters.query_transmission
+          color_int=filters.query_color_int
+          bodyStyle=filters.query_bodyStyle
+          odometer=filters.query_odometer
+          price=filters.query_price)}}
+            <h3 class="text-center" id='clear-filters' data-dismiss="modal" data-target="#filterModal" >
+              Filter
+            </h3> 
+          {{/link-to}}
+        </div>
+        <div class="col-sm-4" {{action 'clear' ''}} style="border-bottom:1px solid #ececec;">
+          <a role="button"><h3 class="text-center" id='clear-filters'>
+            Clear All
+          </h3></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

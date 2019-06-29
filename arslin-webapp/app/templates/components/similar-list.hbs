@@ -1,0 +1,22 @@
+<div id="listing-item">
+  <div class="container-fluid">
+    <div class="listing-list row row-eq-height">
+      {{#link-to "listing" listing.id}}
+      <div class="col">  
+          <div class="listing-item-box" id='scrolltotop'>
+              <h4 class="text-center">{{listing.year}} {{listing.make.pretty}} {{listing.model.pretty}}</h4>
+              <h5 class="text-center">{{listing.odometer.pretty_short}}</h5>
+              {{#if listing.imageList.length}}
+                  <img src='{{listing.imageList.0.src}}' alt='' height='60px' class='img-responsive'/>
+              {{else}}
+                  <img src='https://placehold.it/800x600?text=Image+Coming+Soon' alt='' height='60px' class='img-responsive'/>
+              {{/if}}
+              <p class="left">{{listing.price.est_price.pretty}}</p>
+              <p class="right">Grade: {{listing.grade}}</p>
+              <h6></h6>
+          </div>
+      </div>
+      {{/link-to}}
+    </div>
+  </div>
+</div>

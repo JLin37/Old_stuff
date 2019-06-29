@@ -1,0 +1,86 @@
+<div id="topspace" class="bg-primary">
+</div>
+
+{{#individual-listing listing=model.listing requestreport=model.requestreport zipcode=model.zipcode graphData=model.comparable freeshipping=model.freeshipping}}{{/individual-listing}}
+
+<div id="arslincomparable">
+  <div class="container-fluid text-center">
+    <div class="row">
+      <div class="col-sm-8 col-sm-offset-2">
+        <h3>Similar Cars on Arslin</h3>  
+        <small>See other similar cars Arslin.com has to offer</small>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<div class="toggled container">
+  <div id="page-content" class="visible-xs-block">
+    {{#if model.similar}}
+    {{#swiper-container grabCursor=true loop=true slidesPerView=1 spaceBetween=5 pagination=true}}
+      {{#each model.similar as |listing|}}
+        {{#swiper-slide}}
+          {{similar-list listing=listing}}
+          <hr>
+        {{/swiper-slide}}
+      {{/each}}
+    {{/swiper-container}}
+    {{else}}
+      <hr class="bg-light">
+      <p class='text-center'>No Similar listings!</p>
+    {{/if}}
+  </div>
+
+  <div id="page-content" class="visible-sm-block">
+    {{#if model.similar}}
+    {{#swiper-container grabCursor=true loop=true slidesPerView=2 spaceBetween=5 pagination=true}}
+      {{#each model.similar as |listing|}}
+        {{#swiper-slide}}
+          {{similar-list listing=listing}}
+          <hr>
+        {{/swiper-slide}}
+      {{/each}}
+    {{/swiper-container}}
+    {{else}}
+      <hr class="bg-light">
+      <p class='text-center'>No Similar listings!</p>
+    {{/if}}
+  </div>
+
+  <div id="page-content" class="visible-md-block">
+    {{#if model.similar}}
+    {{#swiper-container grabCursor=true loop=true slidesPerView=2.5 spaceBetween=5 pagination=true}}
+      {{#each model.similar as |listing|}}
+        {{#swiper-slide}}
+          {{similar-list listing=listing}}
+          <hr>
+        {{/swiper-slide}}
+      {{/each}}
+    {{/swiper-container}}
+    {{else}}
+      <hr class="bg-light">
+      <p class='text-center'>No Similar listings!</p>
+    {{/if}}
+  </div>
+
+  <div id="page-content" class="visible-lg-block">
+    {{#if model.similar}}
+    {{#swiper-container grabCursor=true loop=true slidesPerView=3 spaceBetween=5 pagination=true}}
+      {{#each model.similar as |listing|}}
+        {{#swiper-slide}}
+          {{similar-list listing=listing}}
+          <hr>
+        {{/swiper-slide}}
+      {{/each}}
+    {{/swiper-container}}
+    {{else}}
+      <hr class="bg-light">
+      <p class='text-center'>No Similar listings!</p>
+    {{/if}}
+  </div>
+</div>
+
+  

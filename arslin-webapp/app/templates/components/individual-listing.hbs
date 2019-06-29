@@ -1,0 +1,693 @@
+<div id='listing_detail'>
+  <div class="container-fluid">
+    <div class='row'>
+      <div class='col stickleft' id=listingheading>
+          <h1>
+            {{listing.year}} {{listing.make.pretty}} {{listing.model.pretty}}
+          </h1>
+          <p class="stickleft">VIN: {{listing.vin}}</p>
+      </div>
+      <div class='col stickright' id='listingprice'>
+          <h1 class='well well-sm'>
+            Price: {{listing.price.est_price.pretty}} 
+            {{#link-to "payment" listing.id type="button" class="btn btn-primary btn-lg"}}Interested!
+            {{/link-to}}
+          </h1>
+      </div>
+    </div>
+  </div>  <!-- /.container-fluid -->
+</div>
+
+{{#swiper-container pagination=true loop=true autoHeight=true autoplay=1500 class='visible-xs-block visible-sm-block' id='swiperlistingsphotos'}}
+  {{#each listing.imageList as |image|}}
+    {{#swiper-slide}}<img src='{{image.src}}' id='image_group' alt='' class='center-block img-responsive' {{action 'mainGallery'}}/>{{/swiper-slide}}
+  {{else}}
+    {{#swiper-slide}}<img src='https://placehold.it/800x600?text=Image+Coming+Soon' id='image_group' alt='' class='center-block img-responsive'/>{{/swiper-slide}}
+  {{/each}}
+{{/swiper-container}}
+
+<div id='listing-carousel' class="hidden-xs hidden-sm">
+  <div id='carousel-custom' class='carousel slides' data-ride='carousel'>
+      <div class='carousel-outer slides'>
+          <!-- Wrapper for slides -->
+          <div class='carousel-inner' role="listbox" id="links" {{action 'mainGallery'}}>
+            {{#each listing.imageList as |image index|}}
+              {{#if (eq index 0)}}
+                <div class='item active '>
+                  <img src='{{image.src}}' id='image_group' alt='' class='center-block img-responsive'/>
+                </div>
+              {{else if image.src}}
+                <div class='item'>
+                  <img src='{{image.src}}' id='image_group' alt='' class='center-block img-responsive'/>
+                </div>
+              {{/if}}
+            {{else}}
+                <div class='item active'>
+                  <img src='https://placehold.it/800x600?text=Image+Coming+Soon' id='image_group' alt='' class='center-block img-responsive'/>
+                </div>
+            {{/each}}
+          </div>
+
+          {{photo-swipe gallery=mainGallery options=hideShare items=listing.imageList}}    
+          <!-- Controls -->
+          <a class='left carousel-control' href='#carousel-custom' data-slide='prev'>
+              <span class='glyphicon glyphicon-chevron-left'></span>
+          </a>
+          <a class='right carousel-control' href='#carousel-custom' data-slide='next'>
+              <span class='glyphicon glyphicon-chevron-right'></span>
+          </a>
+      </div>
+      
+      <div id='indicators' class='carousel-inner'>
+      <!-- Indicators -->
+        <ol class='carousel-indicators mCustomScrollbar'>
+            {{#each listing.imageList as |image index|}}
+              {{#if (eq index 0)}}
+                <li data-target='#carousel-custom' data-slide-to={{index}} class='active'>
+                <img src='{{image.src}}' height='50px' width='100px' alt='' class='center-block img-responsive'/>
+                </li>
+              {{else}}
+                <li data-target='#carousel-custom' data-slide-to={{index}}>
+                <img src='{{image.src}}' height='50px' width='100px' alt='' class='center-block img-responsive'/>
+                </li>
+              {{/if}}
+            {{else}}
+                <li data-target='#carousel-custom' data-slide-to={{index}}>
+                <img src='https://placehold.it/100x50' height='50px' width='100px' alt='' class='center-block img-responsive'/></li>
+            {{/each}}
+        </ol>             
+      </div>
+  </div>
+</div>
+
+{{photo-swipe gallery=mainGallery items=listing.imageList}}
+
+<div class="alert alert-info text-center" role="alert">Click an image for zoom and share functions.</div>
+
+{{#free-shipping freeshipping=freeshipping}}{{/free-shipping}}
+
+<div class="container text-center">
+  <div class="row center-block" data-toggle="modal" data-target="#freeshipping" data-backdrop="true">
+    <h3 style="border: 1px solid #ececec; padding: 20px;">
+      <strong> Free <img src='assets/img/icons/freeshipping_black.png' height='50'></strong> when you sign up. <a role="button">click here</a>
+    </h3>
+  </div>
+</div>
+
+<div id="listing-details" class="container-fluid">
+
+  <div id="detailsSidebar" class="col visible-xs-block">
+    <div class='row text-center' id='expirationdate'>
+      <h4>Deal Available Till:</h4>
+      <h1 style="color:red">{{listing.expirationDt.pretty}}</h1>
+      <h4>Grade: {{listing.grade}}</h4>
+    </div>
+    <hr>
+    {{#unless isRegistered}}
+    <div class='row text-center'>
+      <h3>Request for Carfax / Autocheck <small>Sorry we can't just link the history reports. Those guys just charge way to much money for carfax / autocheck! We can only show reports by request. Once you request for it, we will email it to you <strong>within 24hrs</strong> </small></h3>
+    </div>
+    {{#if showAlert}}
+      <div class="alert alert-danger text-center" role="alert">
+        <i class="fa fa-times icon-remove" {{action 'dismissAlert'}}></i>
+        Please fix all the errors below before continuing.
+      </div>
+    {{/if}}
+    <form>
+      {{validated-input model=requestreport valuePath='fullName' placeholder='Full Name'}} 
+      <!-- {{validated-input model=requestreport type='number' valuePath='tel' placeholder='Phone Number'}} -->
+      {{validated-input model=requestreport valuePath='email' placeholder='Email'}}
+      {{validated-input model=requestreport valuePath='emailConfirmation' placeholder='Verify Email'}}
+      <button id="submitrequest" class="btn btn-primary center-block"{{action 'submit' listing requestreport onEvent="keypress"}}>Request</button>
+    </form>
+    {{else}}
+      <div class="container-fluid text-center">
+        <div class="alert alert-success" role="alert">
+        <i class="fa fa-check-circle icon-success fa-5x"></i>
+        <br>
+        <h2>Success</h2>
+        </div>
+        <br>
+        <a class="btn btn-secondary" {{action 'reset'}}>Retun to Form</a>
+      </div>
+    {{/unless}}  
+    <hr>
+    <div class="row">
+      <div class='col-xs-6'>
+        <h4><img src='assets/img/icons/mileage_icon.png' width='50' height='50'></h4>
+        <p><small> Mileage: </small>{{listing.odometer.pretty}}</p>
+      </div>
+      <div class='col-xs-6'>
+        <h4><img src='assets/img/icons/trim_icon.png' width='50' height='50'></h4>
+        <p><small>Trim: </small>{{listing.trim.pretty}}</p>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class='col-xs-6'>
+        <h4><img src='assets/img/icons/color_icon.png' width='50' height='50'></h4>
+        <p><small>Exterior Color: </small>{{listing.colorExt}}</p>
+      </div>
+    
+      <div class='col-xs-6'>
+        <h4><img src='assets/img/icons/body_style_icon.png' width='50' height='50'></h4>
+        <p><small>Body Style: </small>{{listing.categories.body_style}}</p>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class='col-xs-6'>
+        <h4><img src='assets/img/icons/transmission_icon.png' width='50' height='50'></h4>
+        <p><small>Transmission: </small>{{listing.transmission}}</p>
+      </div>
+      <div class='col-xs-6'>
+        <h4><img src='assets/img/icons/car_top_icon.png' width='50' height='50'></h4>
+        <p><small>MPG Cty/Hwy: </small>{{listing.mpg.city}}/{{listing.mpg.highway}}</p>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="col-md-8 col-md-offset-1 col-sm-9">
+      <div id="engineinterior">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-8 col-md-offset-2 text-center">
+                <h3>Engine and Interior info</h3>  
+                <small>A breakdown of the mechanical specifications of the engine and interior specs associated with trim.</small>
+              </div>
+            </div>
+            <div class="row" >
+              <div class="col-sm-6">
+                <ul class='list-group'>
+                <div><h4>Engine Data: <small>When available</small></h4>
+                  <li class='list-group-item'>
+                      <strong>Configuration</strong> : {{listing.engine.configuration}}
+                  </li>
+                  <li class='list-group-item'>
+                      <strong>Total Number of Valves</strong> : {{listing.engine.total_valves}}
+                  </li>
+                  <li class='list-group-item'>
+                      <strong>Number of Cylinders</strong> : {{listing.engine.num_of_cyclinders}}
+                  </li>
+                  <li class='list-group-item'>
+                      <strong>Horsepower</strong> : {{listing.engine.horsepower}} (hp)
+                  </li>
+                  <li class='list-group-item'>
+                      <strong>Compressor Type</strong> : {{listing.engine.compressor_type}}
+                  </li>
+                  <li class='list-group-item'>
+                      <strong>Compression Ratio</strong> : {{listing.engine.compression_ratio}}
+                  </li>
+                  <li class='list-group-item'>
+                      <strong>Torque</strong> : {{listing.engine.torque}}
+                  </li>
+                  <li class='list-group-item'>
+                      <strong>Displacement</strong> : {{listing.engine.displacement}}
+                  </li>
+                  <li class='list-group-item'>
+                      <strong>Size of Engine</strong> : {{listing.engine.size}}
+                  </li>
+                </div>
+                </ul>
+              </div>
+              <div class="col-sm-6">
+                <ul class='list-group'>
+                  <div><h4>Detailed Trim:</h4>
+                  {{#if listing.name}}
+                    <li class='list-group-item'>{{listing.name}}</li>
+                  {{else}}
+                    <li class='list-group-item'>Data Unavaliable</li>
+                  {{/if}}
+                  </div>
+                  <div><h4>Interior Details</h4>
+                  {{#each listing.interiorList as |interior|}}
+                    <li class='list-group-item'>
+                      <strong>Material</strong> : {{interior}}
+                    </li>
+                  {{/each}}
+                    <li class='list-group-item'><strong>Interior Color</strong> : {{listing.colorInt}}</li>
+                    <li class='list-group-item'><strong>How does it smell</strong> : {{listing.interiorOdor}}</li>
+                  </div>
+
+                  <div><h4>Keys</h4>
+                  {{#if listing.keyList}}
+                  {{#each listing.keyList as |keys|}}
+                    <li class='list-group-item'>
+                      <strong>Type</strong> : {{keys.type}}
+                    </li>
+                    <li class='list-group-item'>
+                      <strong>Count</strong> : {{keys.count}}
+                    </li>
+                  {{/each}}
+                  {{else}}
+                    <li class='list-group-item'>Data Unavaliable</li>
+                  {{/if}}
+                  </div>
+                  
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <hr class="bg-primary">
+
+        <div id="tire_list">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-8 col-md-offset-2 text-center">
+              <h3>Tires</h3>  
+              <small>The things separating you from the ground - quite important.</small>
+            </div>
+          </div>
+          <div class="row hidden-xs" >
+            <div class='table-responsive'>
+              <table class='table table-bordered table-condensed'>
+                <thead>
+                  <tr>
+                    <th class='text-center'><h6><strong>Position</strong></h6></th>
+                    <th class='text-center'><h6><strong>Brand</strong></h6></th>
+                    <th class='text-center'><h6><strong>Diameter</strong></h6></th>
+                    <th class='text-center'><h6><strong>Width</strong></h6></th>
+                    <th class='text-center'><h6><strong>Aspect Ratio</strong></h6></th>
+                    <th class='text-center'><h6><strong>Tread (Inch)</strong></h6></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Driver Front</td>
+                    <td>{{listing.tireDict.left_front.brand}}</td>
+                    <td>{{listing.tireDict.left_front.diameter}}</td>
+                    <td>{{listing.tireDict.left_front.width}}</td>
+                    <td>{{listing.tireDict.left_front.aspect_ratio}}</td>
+                    <td>{{listing.tireDict.left_front.tread}}</td>
+                  </tr>
+                  <tr>
+                    <td>Passanger Front</td>
+                    <td>{{listing.tireDict.right_front.brand}}</td>
+                    <td>{{listing.tireDict.right_front.diameter}}</td>
+                    <td>{{listing.tireDict.right_front.width}}</td>
+                    <td>{{listing.tireDict.right_front.aspect_ratio}}</td>
+                    <td>{{listing.tireDict.right_front.tread}}</td>
+                  </tr>
+                  <tr>
+                    <td>Driver Back</td>
+                    <td>{{listing.tireDict.left_rear.brand}}</td>
+                    <td>{{listing.tireDict.left_rear.diameter}}</td>
+                    <td>{{listing.tireDict.left_rear.width}}</td>
+                    <td>{{listing.tireDict.left_rear.aspect_ratio}}</td>
+                    <td>{{listing.tireDict.left_rear.tread}}</td>
+                  </tr>
+                  <tr>
+                    <td>Passanger Back</td>
+                    <td>{{listing.tireDict.right_rear.brand}}</td>
+                    <td>{{listing.tireDict.right_rear.diameter}}</td>
+                    <td>{{listing.tireDict.right_rear.width}}</td>
+                    <td>{{listing.tireDict.right_rear.aspect_ratio}}</td>
+                    <td>{{listing.tireDict.right_rear.tread}}</td>
+                  </tr>
+                  <tr>
+                    <td>Spare</td>
+                    <td>{{listing.tireDict.spare.brand}}</td>
+                    <td>{{listing.tireDict.spare.diameter}}</td>
+                    <td>{{listing.tireDict.spare.width}}</td>
+                    <td>{{listing.tireDict.spare.aspect_ratio}}</td>
+                    <td>{{listing.tireDict.spare.tread}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="container-fluid visible-xs-block">
+            <div class="row">
+              <br>
+              <ul class='list-group'>
+                <li class='list-group-item'>
+                  <strong>Position</strong> : Driver Front, 
+                  <br><strong>Brand</strong> : {{listing.tireDict.left_front.brand}}, 
+                  <br><strong>Diameter</strong> : {{listing.tireDict.left_front.diameter}}, 
+                  <br><strong>Width</strong> : {{listing.tireDict.left_front.width}}, 
+                  <br><strong>Aspect Ratio</strong> : {{listing.tireDict.left_front.aspect_ratio}}, 
+                  <br><strong>Tread (Inch)</strong> : {{listing.tireDict.left_front.tread}}
+                </li>
+                <li class='list-group-item'>
+                  <strong>Position</strong> : Passanger Front, 
+                  <strong><br>Brand</strong> : {{listing.tireDict.right_front.brand}}, 
+                  <strong><br>Diameter</strong> : {{listing.tireDict.right_front.diameter}}, 
+                  <strong><br>Width</strong> : {{listing.tireDict.right_front.width}}, 
+                  <strong><br>Aspect Ratio</strong> : {{listing.tireDict.right_front.aspect_ratio}}, 
+                  <strong><br>Tread (Inch)</strong> : {{listing.tireDict.right_front.tread}}
+                </li>
+                <li class='list-group-item'>
+                  <strong>Position</strong> : Driver Back, 
+                  <strong><br>Brand</strong> : {{listing.tireDict.left_rear.brand}}, 
+                  <strong><br>Diameter</strong> : {{listing.tireDict.left_rear.diameter}}, 
+                  <strong><br>Width</strong> : {{listing.tireDict.left_rear.width}}, 
+                  <strong><br>Aspect Ratio</strong> : {{listing.tireDict.left_rear.aspect_ratio}}, 
+                  <strong><br>Tread (Inch)</strong> : {{listing.tireDict.left_rear.tread}}
+                </li>
+                <li class='list-group-item'>
+                  <strong>Position</strong> : Passenger Back, 
+                  <strong><br>Brand</strong> : {{listing.tireDict.right_rear.brand}}, 
+                  <strong><br>Diameter</strong> : {{listing.tireDict.right_rear.diameter}}, 
+                  <strong><br>Width</strong> : {{listing.tireDict.right_rear.width}}, 
+                  <strong><br>Aspect Ratio</strong> : {{listing.tireDict.right_rear.aspect_ratio}}, 
+                  <strong><br>Tread (Inch)</strong> : {{listing.tireDict.right_rear.tread}}
+                </li>
+                <li class='list-group-item'>
+                  <strong>Position</strong> : Spare, 
+                  <strong><br>Brand</strong> : {{listing.tireDict.spare.brand}}, 
+                  <strong><br>Diameter</strong> : {{listing.tireDict.spare.diameter}}, 
+                  <strong><br>Width</strong> : {{listing.tireDict.spare.width}}, 
+                  <strong><br>Aspect Ratio</strong> : {{listing.tireDict.spare.aspect_ratio}}, 
+                  <strong><br>Tread (Inch)</strong> : {{listing.tireDict.spare.tread}}
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr class="bg-primary">
+
+      <div id="damage_list">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-8 col-md-offset-2 text-center">
+              <h3>Inspection</h3>  
+              <small>A full itinerary of damages_list assessed on your vehicle.</small>
+            </div>
+          </div>
+          <div class="row hidden-xs">
+            <div class='table-responsive'>
+              <table class='table table-bordered table-condensed'>
+                <thead>
+                  <tr>
+                      <th class='text-center'><h6><strong>Body Part</strong></h6></th>
+                      <th class='text-center'><h6><strong>Condition</strong></h6></th>
+                      <th class='text-center'><h6><strong>Severity</strong></h6></th>
+                      <th class='text-center'><h6><strong>Picture</strong></h6></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {{#each listing.damagesList as |damage|}}
+                      <tr>
+                        <td>
+                          <h6>
+                             {{damage.description}}
+                          </h6>
+                        </td>
+                        <td>
+                          <h6>
+                            {{damage.condition}}
+                          </h6>
+                        </td>
+                        <td>
+                          <h6>
+                            {{damage.severity}}
+                          </h6>
+                        </td>
+                        {{#if damage.image}}
+                        <td>
+                          {{#photo-swipe items=damage.image as |img|}}
+                            <img class="thumb" src={{img.src}} alt={{img.title}} width='300px' height='200px' class='img-responsive'>
+                          {{/photo-swipe}}
+                        </td>
+                        {{else}}
+                        <td>
+                        </td>
+                      {{/if}}
+                    </tr>
+                  {{/each}}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="container-fluid visible-xs-block">
+            <div class='row'>
+              <br>
+              <ul class='list-group'>
+              {{#each listing.damagesList as |damage|}}
+                {{#if damage.image}}
+                <li class='list-group-item'>
+                  <strong>Body Part</strong> : {{damage.description}}
+                  <strong><br>Condition</strong> : {{damage.condition}}
+                  <strong><br>Severity</strong> : {{damage.severity}}
+                  <strong><br>Picture</strong> :
+                  {{#photo-swipe items=damage.image as |img|}}
+                    <img class="thumb" src='{{img.src}}' alt={{img.title}} width='100%' height='100%' class='img-responsive'>
+                  {{/photo-swipe}}
+                </li>
+                {{else}}
+                <li class='list-group-item'>
+                  <strong>Body Part</strong> : {{damage.description}}
+                  <strong><br>Condition</strong> : {{damage.condition}}
+                  <strong><br>Severity</strong> : {{damage.severity}}
+                  <strong><br>Picture</strong> : Not Avaliable
+                </li>
+                {{/if}}
+              {{/each}}
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div id="detailsSidebar" class="col-md-2 col-sm-3 hidden-xs">
+      <div class='row text-center' id='expirationdate'>
+          <h4>Deal Available Till:</h4>
+          <h1 style="color:red">{{listing.expirationDt.pretty}}</h1>
+          <h4>Grade: {{listing.grade}}</h4>
+      </div>
+      <hr>
+      {{#unless isRegistered}}
+      <div class='row text-center'>
+        <h3>Request for Carfax / Autocheck <small>Sorry we can't just link the history reports. Those guys just charge way to much money for carfax / autocheck! We can only show reports by request. Once you request for it, we will email it to you <strong>within 24hrs</strong> </small></h3>
+      </div>
+      {{#if showAlert}}
+        <div class="alert alert-danger text-center" role="alert">
+          <i class="fa fa-times icon-remove" {{action 'dismissAlert'}}></i>
+          Please fix all the errors below before continuing.
+        </div>
+      {{/if}}
+      <form>
+        {{validated-input model=requestreport valuePath='fullName' placeholder='Full Name'}} 
+        <!-- {{validated-input model=requestreport type='number' valuePath='tel' placeholder='Phone Number'}} -->
+        {{validated-input model=requestreport valuePath='email' placeholder='Email'}}
+        {{validated-input model=requestreport valuePath='emailConfirmation' placeholder='Verify Email'}}
+        <button id="submitrequest" class="btn btn-primary center-block"{{action 'submit' listing requestreport onEvent="keypress"}}>Request</button>
+      </form>
+      {{else}}
+        <div class="container-fluid text-center">
+          <div class="alert alert-success" role="alert">
+          <i class="fa fa-check-circle icon-success fa-5x"></i>
+          <br>
+          <h2>Success</h2>
+          </div>
+          <br>
+          <a class="btn btn-secondary" {{action 'reset'}}>Retun to Form</a>
+        </div>
+      {{/unless}} 
+      <hr>
+      <div class="row">
+      <div class='col-xs-6'>
+        <h4><img src='assets/img/icons/mileage_icon.png' width='50' height='50'></h4>
+        <p><small> Mileage: </small>{{listing.odometer.pretty}}</p>
+      </div>
+      <div class='col-xs-6'>
+        <h4><img src='assets/img/icons/trim_icon.png' width='50' height='50'></h4>
+        <p><small>Trim: </small>{{listing.trim.pretty}}</p>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class='col-xs-6'>
+        <h4><img src='assets/img/icons/color_icon.png' width='50' height='50'></h4>
+        <p><small>Exterior Color: </small>{{listing.colorExt}}</p>
+      </div>
+    
+      <div class='col-xs-6'>
+        <h4><img src='assets/img/icons/body_style_icon.png' width='50' height='50'></h4>
+        <p><small>Body Style: </small>{{listing.categories.body_style}}</p>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class='col-xs-6'>
+        <h4><img src='assets/img/icons/transmission_icon.png' width='50' height='50'></h4>
+        <p><small>Transmission: </small>{{listing.transmission}}</p>
+      </div>
+      <div class='col-xs-6'>
+        <h4><img src='assets/img/icons/car_top_icon.png' width='50' height='50'></h4>
+        <p><small>MPG Cty/Hwy: </small>{{listing.mpg.city}}/{{listing.mpg.highway}}</p>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+
+<div id="onlineReviews" class="container-fluid">
+  <div class="row text-center">
+    <div class="col-lg-8 col-lg-offset-2">
+      <hr class="bg-primary">
+
+      <div id="comparableData">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 text-center">
+              <h3>Competitors' listing</h3>  
+              <small>We want to give you the most amount of discloser. So we even show you what our competitors have for offer</small>
+            </div>
+          </div>
+          
+          <hr>
+
+          <div>
+            <p>Enter your Zip Code to view comparable vehicle in your local area.</p>
+            <div style="display:inline-block;margin-right:10px;">{{validated-input model=zipcode valuePath='zipcode' placeholder="Zip Code" type='number'}}</div>
+            <div style="display:inline-block;">{{#link-to "listing" (query-params zipCode=zipcode.zipcode) class="btn btn-primary"}}Submit{{/link-to}}</div>
+          </div>
+
+          <hr class="bg-light">
+          <div class="alert alert-info text-center" role="alert">Some vehicle comparables don't account for trim when the trims don't match. So there will be price discrepancy.</div>
+          <div class="row">
+            <div class="col text-center" >
+              {{#if graphData.scatterContent}}
+                <div id="chart_div">
+                  {{comparable-chart graphData=graphData}}
+                </div>
+              {{else}}
+                <ul class="list-group">
+                  <li class="list-group-item">There is no comparable vehicle in your area right now.</li>
+                </ul>
+              {{/if}}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr class="bg-primary">
+
+      <div id="option_list">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col text-center">
+              <h3>Features</h3>  
+              <small>Features included on the vehicle at the time of manufacture (based on VIN).</small>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              {{#each listing.optionsList as |option|}}
+                <div class="col-md-3 col-sm-4 col-xs-6">
+                  <li class="text-left">
+                    {{option}}
+                  </li>
+                </div>
+              {{/each}}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr class="bg-primary">
+
+      <div id="vehicle_warranty">
+        <div class="container-fluid text-center">
+          <div class="row">
+            <div class="col-lg-8 col-lg-offset-2">
+              <h3>Warranty</h3>  
+              <small>Manufacturer Warranty avaliable.</small>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col" >
+              <ul class="list-group">
+                {{#if listing.warrantyBasicYears}}
+                <li class="list-group-item"><strong>Original Manufacturer Basic Warranty Years / Miles</strong> : {{listing.warrantyBasicYears}} yrs / {{listing.warrantyBasicMiles}} miles</li>
+                {{/if}}
+                {{#if listing.warrantyPowertrainYears}}
+                <li class="list-group-item"><strong>Original Manufacturer Powertrain Warranty Years / Miles</strong> : {{listing.warrantyPowertrainYears}} yrs / {{listing.warrantyPowertrainMiles}} miles</li>
+                {{/if}}
+                {{#if listing.warrantyBasicYears}}
+                {{else if listing.warrantyBasicMiles}}
+                {{else if listing.warrantyPowertrainYears}}
+                {{else if listing.warrantyPowertrainMiles}}
+                {{else}}
+                  <li class="list-group-item">Data Unavaliable / Manufacturer Warranty has expired</li>
+                {{/if}}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<div id="onlineReviews" class="container-fluid">
+  <div class="row text-center">
+    <div class="col-lg-8 col-lg-offset-2">
+      <hr class="bg-primary">
+      <div id="edmundsReviews">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 text-center">
+              <h3>Edmunds Reviews</h3>
+
+              <small>Let the guys at Edmunds tell you about what they think of this car</small>
+            </div>
+            <img src="assets/img/220_color.png" >
+          </div>
+          <div class="row">
+            
+            <div class="col text-center" >
+              {{#if listing.edmundsReview.editorial.introduction}}
+              
+                
+                {{{listing.edmundsReview.editorial.introduction}}}
+                
+              {{else if listing.edmundsReview.editorial.review}}
+                <p>Disclaimer: Reviews for older cars are based off of when they first came to market.</p>
+                {{{listing.edmundsReview.editorial.review}}}
+              {{else}}
+                <ul class="list-group">
+                  <li class="list-group-item">Edmunds Review Unavaliable</li>
+                </ul>
+              {{/if}}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr class="bg-primary">
+
+      <div id="youtubeReviews">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 text-center">
+              <h3>Online Reviews</h3>  
+              <small>See what the world at large has to say about your {{listing.year}} {{listing.make.pretty}} {{listing.model.pretty}}.</small>
+            </div>
+          </div>
+          <div class="row">
+            <div class="embed-responsive embed-responsive-16by9">
+              <iframe class='center-block' id="ytplayer" type="text/html"  width="720" height="405"
+              src="https://www.youtube.com/embed/?listType=search&list='{{listing.year}} {{listing.make.pretty}} {{listing.model.pretty}} {{listing.trim.pretty}} review'&modestbranding=1&color=white"
+              frameborder="0" allowfullscreen></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr class="bg-primary">
+    </div>
+  </div>
+</div>

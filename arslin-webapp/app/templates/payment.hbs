@@ -1,0 +1,69 @@
+<header class='bg-primary'>
+  <div class="header-content">
+      <div class="header-content-inner">
+          <h1>Ready to purchase the car of your dreams?</h1>
+          <h3>This {{listing.year}} {{listing.make.pretty}} {{listing.model.pretty}} could be in your drive way soon.</h3>
+          <h3>Vin: {{listing.vin}}</h3>
+          <h3>Acquisition Cost: {{listing.price.est_price.pretty}}</h3>
+      </div>
+  </div>
+</header>
+
+<section class="container-fluid">
+  <div class='row'>
+    <div class='col-md-4 col-md-offset-2 col-sm-6 payment-details'>
+      <div class="container-fluid">
+        <h2>Need Financing</h2>
+        <hr>
+        <h4>If you need financing to purchase this vehicle. Please click the button below to access our lending partner application form and fill out the information requested.</h4>
+        <h4>Once you have been approved by a bank, we can proceed from there. Thank you!</h4>
+        <hr>
+        <a href='https://gateway.appone.net/onlineapp/Arslin' target="_blank"><button class="btn btn-primary">Purchase with Financing</button></a>
+        <hr>  
+        <h3>Coming Soon</h3>
+        <p>You will be able to calculate with a Zip code you provide, your State Registration, Tag Fee and Tilte Fee. Also we be able to show you how much it will cost us to ship the car to your driveway.</p>
+      </div>
+    </div>
+
+    <div class='col-md-4 col-sm-6 form'>
+      <div class="container-fluid">
+        
+        <h2>Have your own financing.</h2>
+        <hr>
+        {{#unless isRegistered}}
+        <h4>Fill out the form and we will contact your right away on how we can proceed.</h4>
+        {{#if showAlert}}
+        <div class="alert alert-danger text-center" role="alert">
+          <i class="fa fa-times icon-remove" {{action 'dismissAlert'}}></i>
+          Please fix all the errors below before continuing.
+        </div>
+        {{/if}}
+        <form>
+          {{validated-input model=payment valuePath='fullName' placeholder='Full Name'}} 
+          {{validated-input model=payment valuePath='tel' placeholder='Phone Number'}}
+          {{validated-input model=payment valuePath='email' placeholder='Email'}}
+          {{validated-input model=payment valuePath='emailConfirmation' placeholder='Verify Email'}}
+          {{textarea type='text' value=payment.comment placeholder='Comments' valuePath='comment' class="form-control"}}
+          <br>
+          {{validated-input model=payment valuePath='city' placeholder='City'}} 
+     
+          {{validated-input model=payment valuePath='state' placeholder="State"}}
+      
+          {{validated-input model=payment valuePath='zipCode' placeholder="Zip Code" type='number'}}
+          <button id="submitrequest" class="btn btn-primary center-block"{{action 'submit' payment listing onEvent="keypress"}}>Submit</button>
+        </form>
+        {{else}}
+          <div class="container-fluid text-center">
+            <div class="alert alert-success" role="alert">
+            <i class="fa fa-check-circle icon-success fa-5x"></i>
+            <br>
+            <h2>Success</h2>
+            </div>
+            <br>
+            <a class="btn btn-secondary" {{action 'reset'}}>Retun to Form</a>
+          </div>
+        {{/unless}}  
+      </div>
+    </div>
+  </div>
+</section>
