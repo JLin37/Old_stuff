@@ -54,7 +54,7 @@
     "ember-truth-helpers": "1.2.0",
     "ember-windoc": "0.1.6",
     "emberx-range-input": "1.0.2",
-    "highcharts": "4.2.5",
+    "highcharts": "8.2.0",
     "loader.js": "^4.0.0",
     "update": "0.4.2"
   },
